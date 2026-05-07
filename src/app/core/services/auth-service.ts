@@ -5,17 +5,7 @@ import { Observable, tap } from 'rxjs';
 import { TokenService } from './token-service';
 import { AuthStateService } from './auth-state';
 import { environment } from '../../../environments/environment';
-
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
-
-export interface LoginResponse {
-  token: string;
-  role: string;
-  userId: string;
-}
+import { LoginRequest, LoginResponse } from '../models/auth';
 
 @Injectable({
   providedIn: 'root'
