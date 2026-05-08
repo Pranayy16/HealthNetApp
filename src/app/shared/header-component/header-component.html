@@ -1,0 +1,119 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom d-none d-lg-flex">
+  <div class="container-fluid">
+
+    <!-- Logo -->
+    <a class="navbar-brand fw-bold text-dark" routerLink="/">
+      {{ appName }}
+    </a>
+
+    <!-- Navigation Links -->
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/compliance">Compliance</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/outbreaks">Outbreaks</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/labs">Labs</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/about">About</a>
+      </li>
+    </ul>
+
+    <!-- Auth Buttons -->
+    <div class="d-flex gap-2">
+      <a routerLink="/login" class="btn btn-outline-color btn-sm">
+        Login
+      </a>
+      <a routerLink="/register" class="btn btn-color btn-sm">
+        Sign Up
+      </a>
+    </div>
+
+  </div>
+</nav>
+
+<nav class="navbar navbar-light bg-light border-bottom d-lg-none">
+  <div class="container-fluid">
+
+    <button
+      class="btn btn-outline-dark"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#mobileSidebar">
+      ☰
+    </button>
+
+    <span class="fw-bold text-dark">
+      {{ appName }}
+    </span>
+
+  </div>
+</nav>
+
+<div
+  class="offcanvas offcanvas-start"
+  tabindex="-1"
+  id="mobileSidebar">
+
+  <div class="offcanvas-header">
+    <h5 class="fw-bold text-dark">
+      {{ appName }}
+    </h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas">
+    </button>
+  </div>
+
+  <div class="offcanvas-body">
+    <ul class="nav flex-column gap-2">
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/home" data-bs-dismiss="offcanvas">
+          Dashboard
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/compliance" data-bs-dismiss="offcanvas">
+          Compliance
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/outbreaks" data-bs-dismiss="offcanvas">
+          Outbreaks
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/labs" data-bs-dismiss="offcanvas">
+          Labs
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/about" data-bs-dismiss="offcanvas">
+          About
+        </a>
+      </li>
+
+      <hr>
+
+      <a routerLink="/login" class="btn btn-outline-color w-100 mb-2" data-bs-dismiss="offcanvas">
+        Login
+      </a>
+
+      <a routerLink="/register" class="btn btn-color w-100" data-bs-dismiss="offcanvas">
+        Sign Up
+      </a>
+
+    </ul>
+  </div>
+</div>
