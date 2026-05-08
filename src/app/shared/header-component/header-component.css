@@ -1,0 +1,15 @@
+.btn-color{
+    background-color: #7F00FF;
+    color: white;
+}
+.btn-color:hover{
+    background-color: #6309bd;
+}
+.btn-outline-color{
+    border: 1px solid #7F00FF;
+    color: #7F00FF;
+}
+.btn-outline-color:hover{
+    color: white;
+    background-color: #6309bd;
+}

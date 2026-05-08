@@ -39,4 +39,17 @@ export const routes: Routes = [
     ]
   },
   { path: '**', redirectTo: '/login' }
+import { HomeComponent } from './components/home-component/home-component';
+import { ComplianceComponent } from './components/compliance-component/compliance-component';
+import { AboutComponent } from './components/about-component/about-component';
+import { LoginComponent } from './components/login-component/login-component';
+import { RegisterComponent } from './components/register-component/register-component';
+
+export const routes: Routes = [
+    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent},
+    { path: 'home', component: HomeComponent },
+    { path: 'compliance', component: ComplianceComponent},
+    { path: 'about', component: AboutComponent},
 ];
