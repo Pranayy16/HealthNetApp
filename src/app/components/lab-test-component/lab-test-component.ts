@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { LabTest, LabTestFilter } from '../../core/models/lab-test.model';
 import { LabTestService } from '../../core/services/lab-test.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../core/services/auth-service';
 
 @Component({
   selector: 'app-lab-test-component',
@@ -16,10 +17,12 @@ export class LabTestComponent implements OnInit {
 
   private labTestService = inject(LabTestService);
   private router = inject(Router);
+  private authService = inject(AuthService);
 
   labTests: LabTest[] = [];
   isLoading: boolean = false;
   errorMsg: string | null = null;
+  canCreate: boolean = false;
 
   // Filter fields
   selectedType: string = '';
@@ -31,6 +34,8 @@ export class LabTestComponent implements OnInit {
   statusOptions: string[] = ['Pending', 'Completed'];
 
   ngOnInit(): void {
+    const role = this.authService.getUserRole();
+    this.canCreate = role === 'Doctor' || role === 'Lab Technician';
     this.loadLabTests();
   }
 
@@ -93,5 +98,9 @@ export class LabTestComponent implements OnInit {
 
   viewDetails(testId: number): void {
     this.router.navigate(['/lab-tests', testId]);
+  }
+
+  navigateToCreate(): void {
+  this.router.navigate(['/lab-tests/create']);
   }
 }

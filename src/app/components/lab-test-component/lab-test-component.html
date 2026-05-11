@@ -102,7 +102,14 @@
         <div class="card-title">
           <i class="ti ti-clipboard-list"></i> All Lab Tests
         </div>
-        <span class="count-badge">{{ labTests.length }} records</span>
+        <div class="d-flex gap-2 align-items-center">
+          <span class="count-badge">{{ labTests.length }} records</span>
+          <button class="btn-create"
+          *ngIf="canCreate"
+          (click)="navigateToCreate()">
+          <i class="ti ti-plus"></i> New Test
+          </button>
+        </div>
       </div>
 
       <!-- Empty State -->

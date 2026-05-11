@@ -39,3 +39,15 @@ export interface LabReportResponse {
     reports: LabReport[];
   };
 }
+
+export interface CreateLabTestRequest {
+  patientId: number;
+  type: string;
+  technicianId: number;
+}
+
+export interface CreateLabTestResponse {
+  success: boolean;
+  message: string;
+  data: LabTest;
+}
