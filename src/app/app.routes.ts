@@ -5,6 +5,7 @@ import { AboutComponent } from './components/about-component/about-component';
 import { LoginComponent } from './components/login-component/login-component';
 import { RegisterComponent } from './components/register-component/register-component';
 import { OutbreakComponent } from './components/outbreak-component/outbreak-component';
+import { LabTestComponent } from './components/lab-test-component/lab-test-component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -13,5 +14,6 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'compliance', component: ComplianceComponent},
     { path: 'about', component: AboutComponent},
-    { path: "outbreaks", component: OutbreakComponent }
+    { path: "outbreaks", component: OutbreakComponent },
+    { path: 'lab-tests', component: LabTestComponent }
 ];
