@@ -1,1 +1,87 @@
-<p>login-component works!</p>
+<div class="container-fluid min-vh-100">
+  <div class="row min-vh-100">
+
+    <!-- LEFT SIDE : Branding / Description (Desktop Only) -->
+    <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center bg-health">
+      <div class="text-white px-5">
+        <div class="d-flex align-items-center mb-4">
+          <img src="/assets/images/HealthNet-logo.png" alt="HealthNet Logo" class="me-3 logo" />
+          <!-- <h2 class="fw-bold mb-0">HealthNet</h2> -->
+        </div>
+
+        <p class="fs-5">
+          Public Health & Disease Surveillance System
+        </p>
+
+        <ul class="mt-4 fs-6">
+          <li>Track disease outbreaks in real time</li>
+          <li>Secure access for doctors & labs</li>
+          <li>Integrated public health records</li>
+          <li>Compliance & audit-ready platform</li>
+        </ul>
+
+        <p class="mt-4 text-light small">
+          Supporting citizens, hospitals, and public health agencies
+          with reliable epidemiological data.
+        </p>
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE : Login Form (All Screens) -->
+    <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center">
+      <div class="w-100 px-4 px-sm-5">
+
+        <h3 class="text-center fw-bold mb-4 d-lg-none">
+          HealthNet Login
+        </h3>
+
+        <div class="card shadow-lg border-0 rounded-4">
+          <div class="card-body p-4 p-md-5">
+            <h4 class="text-center mb-4 fw-semibold">
+              Sign In
+            </h4>
+
+            <form>
+              <div class="mb-3">
+                <label class="form-label">Email</label>
+                <div class="input-group input-group-lg">
+                    <span class="input-group-text">
+                      <i class="bi bi-envelope"></i>
+                    </span>
+                    <input type="email" class="form-control" placeholder="name@email.com"
+                        autocomplete="username" [(ngModel)]="email" name="email" required />
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <div class="input-group input-group-lg">            
+                    <input [type]="seePassword? 'text' : 'password'" class="form-control" placeholder="Enter password"
+                        autocomplete="new-password" [(ngModel)]="password" name="password" required />
+
+                    <span class="input-group-text" style="cursor: pointer" (click)="showPassword()">
+                      <i [ngClass]="seePassword? 'bi bi-eye-slash' : 'bi bi-eye'"></i>
+                    </span>
+                  </div>
+              </div>
+
+              <div *ngIf="errMsg" class="mt-2 text-left text-danger">{{errMsg}}</div>
+
+              <button type="submit" class="btn btn-primary btn-lg w-100 mt-3 custom-class" (click)="onSubmit()"
+                [disabled]="isSubmitting">
+                {{ isSubmitting? "Logging in..." : "Login"}}
+                <i class="bi bi-box-arrow-in-right"></i>
+              </button>
+            </form>
+
+            <div class="text-center mt-3">
+              <p>Don't have account?<a routerLink="/register"> Sign Up here</a></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -4,13 +4,13 @@ import { map } from 'rxjs/operators';
 import { TokenService } from './token-service';
 
 export interface AuthUser {
-  userId: string | null;
+  userId: number;
   role: string | null;
   isLoggedIn: boolean;
 }
 
 const initialState: AuthUser = {
-  userId: null,
+  userId: 0,
   role: null,
   isLoggedIn: false
 };
@@ -52,7 +52,8 @@ export class AuthStateService {
     return this.authState$.getValue();
   }
 
-  setLoggedIn(userId: string, role: string): void {
+  setLoggedIn(userId: number, role: string): void {
+    console.log("set logged in called in auth state")
     this.authState$.next({
       userId,
       role,
