@@ -41,6 +41,11 @@
         <div class="card-title">
           <i class="ti ti-clipboard-list"></i> Lab Test Information
         </div>
+          <button class="btn-edit"
+            *ngIf="canEdit && labTest && !labTest.status"
+            (click)="navigateToEdit()">
+            <i class="ti ti-edit"></i> Edit Test
+          </button>
         <span class="badge" [ngClass]="getStatusClass(labTest.status)">
           {{ getStatusLabel(labTest.status) }}
         </span>

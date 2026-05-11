@@ -13,6 +13,7 @@ import { Unauthorized } from './components/unauthorized/unauthorized';
 import { LabTestComponent } from './components/lab-test-component/lab-test-component';
 import { LabTestDetailComponent } from './components/lab-test-detail-component/lab-test-detail-component';
 import { LabTestCreateComponent } from './components/lab-test-create-component/lab-test-create-component';
+import { LabTestEditComponent } from './components/lab-test-edit-component/lab-test-edit-component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -25,6 +26,7 @@ export const routes: Routes = [
     { path: 'lab-tests', component: LabTestComponent, canActivate: [roleGuard], data: { roles: ['Doctor','Lab Technician']} },
     { path: 'lab-tests/create', component: LabTestCreateComponent, canActivate: [roleGuard], data: { roles: ['Doctor','Lab Technician']}},
     { path: 'lab-tests/:id', component: LabTestDetailComponent, canActivate: [roleGuard], data: { roles: ['Doctor','Lab Technician']} },
+    { path: 'lab-tests/:id/edit', component: LabTestEditComponent, canActivate: [roleGuard], data: { roles: ['Doctor', 'Lab Technician']} },
     { path: "profile", component: ProfileComponent},
     { path: "update", component: UpdateUserComponent, canActivate: [roleGuard], data: { roles: ['Admin']} },
     { path: "delete", component: DeleteUserComponent, canActivate: [roleGuard], data: { roles: ['Admin']} },

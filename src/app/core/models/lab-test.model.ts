@@ -51,3 +51,17 @@ export interface CreateLabTestResponse {
   message: string;
   data: LabTest;
 }
+
+export interface UpdateLabTestRequest {
+  type?: string;
+  technicianId?: number;
+}
+
+export interface UpdateLabTestResponse {
+  success: boolean;
+  message: string;
+  data: LabTest;
+  patientId: number;
+  type: string;
+  technicianId: number;
+}
