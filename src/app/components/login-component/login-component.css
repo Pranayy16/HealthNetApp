@@ -1,0 +1,31 @@
+/* Left panel background */
+.bg-health {
+    background: linear-gradient(135deg, #0C447C, #185FA5);
+}
+
+/* Logo size */
+.logo {
+  width: 50%;
+  height: 20%;
+}
+
+/* Limit login width on large screens */
+.login-card {
+  max-width: 420px;
+}
+
+/* Rounded inputs & button */
+input,
+button {
+  border-radius: 0.75rem;
+}
+
+/* Adds transformation */
+.custom-class {
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.custom-class:hover {
+    transform: scale(1.05);
+}

@@ -1,0 +1,18 @@
+.custom-class {
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.custom-class:hover {
+    transform: scale(1.05);
+}
+
+.custom-bg{
+    background-color: #185FA5;
+}
+
+.custom-text{
+    color: #718096;
+}
+
+

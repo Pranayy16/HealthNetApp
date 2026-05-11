@@ -1,0 +1,17 @@
+.bg-health {
+  background: linear-gradient(135deg, #0C447C, #185FA5);
+}
+
+.logo {
+  height: 48px;
+}
+
+
+@media (max-width: 768px) {
+  .logo {
+    height: 40px;
+  }
+}
+
+
+
