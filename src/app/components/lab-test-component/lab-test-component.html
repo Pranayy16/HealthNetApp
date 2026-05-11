@@ -127,7 +127,9 @@
           </thead>
           <tbody>
             <tr *ngFor="let test of labTests; let i = index"
-                [style.animation-delay]="i * 0.05 + 's'">
+                [style.animation-delay]="i * 0.05 + 's'"
+                (click)="viewDetails(test.testId)"
+                style="cursor: pointer;">
               <td class="test-id">#{{ test.testId }}</td>
               <td>P-{{ test.patientId }}</td>
               <td>

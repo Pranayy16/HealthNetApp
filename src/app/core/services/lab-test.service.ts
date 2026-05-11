@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { LabTestFilter, LabTestResponse } from '../models/lab-test.model';
+import { LabReportResponse, LabTestFilter, LabTestResponse } from '../models/lab-test.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LabTestService {
 
-  private readonly apiUrl = `${environment.apiUrl}/LaboratoryTesting/lab-tests`;
+  private readonly apiUrl = `${environment.apiUrl}LaboratoryTesting/lab-tests`;
+  private readonly labReportUrl = `${environment.apiUrl}LabReport`;
 
   constructor(private http: HttpClient) {}
 
@@ -21,5 +22,15 @@ export class LabTestService {
     if (filter?.date)   params = params.set('date', filter.date);
 
     return this.http.get<LabTestResponse>(this.apiUrl, { params });
+  }
+
+  getReportsByTestId(testId: number): Observable<LabReportResponse> {
+    return this.http.get<LabReportResponse>(`${this.labReportUrl}/test/${testId}`);
+  }
+
+  downloadReport(testId: number): Observable<Blob> {
+    return this.http.get(`${this.labReportUrl}/test/${testId}/download`, {
+      responseType: 'blob'
+    });
   }
 }
