@@ -10,10 +10,8 @@ import { OutbreakDashboardComponent } from './components/outbreak-component/outb
 import { OutbreakUpdateComponent } from './components/outbreak-component/outbreak-update/outbreak-update';
 import { OutbreakDetailComponent } from './components/outbreak-component/outbreak-detail/outbreak-detail';
 import { authGuard } from './core/guards/auth-guard';
-import { roleGuard } from './core/guards/role-guard';
 
 const OUTBREAK_ROLES = ['Admin', 'Doctor', 'Public Health Officer'];
-import { OutbreakComponent } from './components/outbreak-component/outbreak-component';
 import { ProfileComponent } from './components/profile-component/profile-component';
 import { UpdateUserComponent } from './components/update-user-component/update-user-component';
 import { roleGuard } from './core/guards/role-guard';
@@ -71,7 +69,6 @@ export const routes: Routes = [
     },
     { path: 'compliance', component: ComplianceComponent},
     { path: 'about', component: AboutComponent},
-    { path: "outbreaks", component: OutbreakComponent },
     { path: 'lab-tests', component: LabTestComponent, canActivate: [roleGuard], data: { roles: ['Doctor','Lab Technician']} },
     { path: 'lab-tests/create', component: LabTestCreateComponent, canActivate: [roleGuard], data: { roles: ['Doctor','Lab Technician']}},
     { path: 'lab-tests/:id', component: LabTestDetailComponent, canActivate: [roleGuard], data: { roles: ['Doctor','Lab Technician']} },
