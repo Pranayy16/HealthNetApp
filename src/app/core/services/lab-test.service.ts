@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { CreateLabTestRequest, CreateLabTestResponse, LabReportResponse, LabTestFilter, LabTestResponse } from '../models/lab-test.model';
+import { CreateLabTestRequest, CreateLabTestResponse, LabReportResponse, LabTestFilter, LabTestResponse, UpdateLabTestRequest, UpdateLabTestResponse } from '../models/lab-test.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +32,10 @@ export class LabTestService {
     return this.http.get(`${this.labReportUrl}/test/${testId}/download`, {
       responseType: 'blob'
     });
+  }
+
+   updateLabTest(testId: number, request: UpdateLabTestRequest): Observable<UpdateLabTestResponse> {
+    return this.http.put<UpdateLabTestResponse>(`${environment.apiUrl}LaboratoryTesting/${testId}`, request);
   }
 
   createLabTest(request: CreateLabTestRequest): Observable<CreateLabTestResponse> {

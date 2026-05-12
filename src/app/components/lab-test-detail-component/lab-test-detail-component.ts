@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LabTest, LabReport, LabTestFilter } from '../../core/models/lab-test.model';
 import { LabTestService } from '../../core/services/lab-test.service';
+import { AuthService } from '../../core/services/auth-service';
 
 @Component({
   selector: 'app-lab-test-detail-component',
@@ -16,10 +17,12 @@ export class LabTestDetailComponent implements OnInit {
   private labTestService = inject(LabTestService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private authService = inject(AuthService);
 
   testId: number = 0;
   labTest: LabTest | null = null;
   reports: LabReport[] = [];
+  canEdit: boolean = false;
 
   isLoadingTest: boolean = false;
   isLoadingReports: boolean = false;
@@ -33,6 +36,8 @@ export class LabTestDetailComponent implements OnInit {
     this.testId = Number(this.route.snapshot.paramMap.get('id'));
     this.loadLabTest();
     this.loadReports();
+    const role = this.authService.getUserRole();
+    this.canEdit = role === 'Doctor' || role === 'Lab Technician';
   }
 
   loadLabTest(): void {
@@ -120,5 +125,8 @@ export class LabTestDetailComponent implements OnInit {
     return new Date(date).toLocaleDateString('en-IN', {
       day: '2-digit', month: 'short', year: 'numeric'
     });
+  }
+  navigateToEdit(): void {
+  this.router.navigate(['/lab-tests', this.testId, 'edit']);
   }
 }
