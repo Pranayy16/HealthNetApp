@@ -15,6 +15,10 @@ import { SymptomReportComponent } from './components/symptomreport-component/sym
 import { CitizenhomeComponent } from './components/citizenhome-component/citizenhome-component';
 
 
+import { LabTestComponent } from './components/lab-test-component/lab-test-component';
+import { LabTestDetailComponent } from './components/lab-test-detail-component/lab-test-detail-component';
+import { LabTestCreateComponent } from './components/lab-test-create-component/lab-test-create-component';
+import { LabTestEditComponent } from './components/lab-test-edit-component/lab-test-edit-component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -24,6 +28,10 @@ export const routes: Routes = [
     { path: 'compliance', component: ComplianceComponent},
     { path: 'about', component: AboutComponent},
     { path: "outbreaks", component: OutbreakComponent },
+    { path: 'lab-tests', component: LabTestComponent, canActivate: [roleGuard], data: { roles: ['Doctor','Lab Technician']} },
+    { path: 'lab-tests/create', component: LabTestCreateComponent, canActivate: [roleGuard], data: { roles: ['Doctor','Lab Technician']}},
+    { path: 'lab-tests/:id', component: LabTestDetailComponent, canActivate: [roleGuard], data: { roles: ['Doctor','Lab Technician']} },
+    { path: 'lab-tests/:id/edit', component: LabTestEditComponent, canActivate: [roleGuard], data: { roles: ['Doctor', 'Lab Technician']} },
     { path: "profile", component: ProfileComponent},
     { path: 'symptom-history', component: SymptomHistoryComponent },
     { path: 'symptom-report', component: SymptomReportComponent },
