@@ -41,11 +41,17 @@ export class TokenService {
 
   getUserRole(): string | null {
     const decoded = this.decodeToken();
-    return decoded?.role || decoded?.roles?.[0] || null;
+    if (!decoded) return null;
+    // .NET JwtSecurityTokenHandler emits role under the full schema URI by default.
+    const dotnetRoleClaim = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
+    const claim = decoded[dotnetRoleClaim] ?? decoded.role ?? decoded.roles;
+    if (Array.isArray(claim)) return claim[0] ?? null;
+    return claim ?? null;
   }
 
   getUserId(): string | null {
     const decoded = this.decodeToken();
-    return decoded?.sub || decoded?.userId || null;
+    const nameIdClaim = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier';
+    return decoded?.[nameIdClaim] ?? decoded?.sub ?? decoded?.userId ?? null;
   }
 }
