@@ -3,17 +3,19 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LabTest, LabTestFilter } from '../../core/models/lab-test.model';
 import { LabTestService } from '../../core/services/lab-test.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lab-test-component',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './lab-test-component.html',
-  styleUrl: './lab-test-component.css',
+  styleUrl: './lab-test-component.css'
 })
 export class LabTestComponent implements OnInit {
 
   private labTestService = inject(LabTestService);
+  private router = inject(Router);
 
   labTests: LabTest[] = [];
   isLoading: boolean = false;
@@ -87,5 +89,9 @@ export class LabTestComponent implements OnInit {
 
   getTypeCount(type: string): number {
     return this.labTests.filter(t => t.type === type).length;
+  }
+
+  viewDetails(testId: number): void {
+    this.router.navigate(['/lab-tests', testId]);
   }
 }
