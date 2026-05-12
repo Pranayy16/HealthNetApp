@@ -11,21 +11,21 @@ import { UpdateUser } from '../../models/UpdateUser';
 })
 export class UserService {
   private http: HttpClient = inject(HttpClient);
-  private readonly apiBaseUrl = environment.apiUrl;
+  private readonly apiBaseUrl = `${environment.apiUrl}/User`;
 
-  register(userData: User): Observable<RegisterResponse>{
-    return this.http.post<RegisterResponse>(`${this.apiBaseUrl}User/register`,userData);
+  register(userData: User): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>(`${this.apiBaseUrl}/register`, userData);
   }
 
-  getUserData(id: number): Observable<User>{
-    return this.http.get<User>(`${this.apiBaseUrl}User/`+id);
+  getUserData(id: number): Observable<User> {
+    return this.http.get<User>(`${this.apiBaseUrl}/${id}`);
   }
 
-  updateUserDate(id: number, userData: UpdateUser): Observable<RegisterResponse>{
-    return this.http.put<RegisterResponse>(`${this.apiBaseUrl}User/update/${id}`,userData);
+  updateUserDate(id: number, userData: UpdateUser): Observable<RegisterResponse> {
+    return this.http.put<RegisterResponse>(`${this.apiBaseUrl}/update/${id}`, userData);
   }
 
-  deleteUserAccount(id: number): Observable<any>{
-    return this.http.patch<any>(`${this.apiBaseUrl}User/delete/${id}`,id);
+  deleteUserAccount(id: number): Observable<any> {
+    return this.http.patch<any>(`${this.apiBaseUrl}/delete/${id}`, id);
   }
 }

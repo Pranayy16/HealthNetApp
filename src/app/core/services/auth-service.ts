@@ -29,17 +29,16 @@ export class AuthService {
   }
 
   login(credentials: LoginRequest): Observable<LoginResponse> {
-    console.log("login called in authservice")
-    return this.http.post<LoginResponse>(`${this.apiUrl}User`, credentials).pipe(
-      tap(response => {
-        this.tokenService.setToken(response.token);
-        const userId: number = this.tokenService.getUserId();
-        const role: string = this.tokenService.getUserRole();
-        this.authStateService.setLoggedIn(userId, role);
-        this.isLoggedInSubject.next(true);
-      })
-    );
-  }
+  return this.http.post<LoginResponse>(`${this.apiUrl}/User`, credentials).pipe(
+    tap(response => {
+      this.tokenService.setToken(response.token);
+      const userId: number = this.tokenService.getUserId();
+      const role: string = this.tokenService.getUserRole();
+      this.authStateService.setLoggedIn(userId, role);
+      this.isLoggedInSubject.next(true);
+    })
+  );
+}
 
   logout(): void {
     this.tokenService.removeToken();

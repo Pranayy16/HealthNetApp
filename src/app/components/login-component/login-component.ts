@@ -30,28 +30,44 @@ export class LoginComponent {
     this.seePassword = !this.seePassword;
   }
 
-  onSubmit(): void{
-    if(!this.email || !this.password){
-      this.errMsg = "*Email or Password cannot be empty."
-      this.isSubmitting = false;
-    }
-    const data: LoginRequest = { 
-      email: this.email, 
-      password: this.password
-    }
-
-    this.authService.login(data).subscribe({
-      next: () =>{
-        this.isSubmitting = true;
-        this.errMsg = null;
-        this.router.navigate(["/home"]);
-      },
-      error: (err)=>{
-        this.isSubmitting = false;
-        this.errMsg = "*Invalid email or password";
-        console.error(err);
-      }
-    })
+  onSubmit(): void {
+  if (!this.email || !this.password) {
+    this.errMsg = '*Email or Password cannot be empty.';
+    this.isSubmitting = false;
+    return;  // ← also add return here so it doesn't continue
   }
+
+  const data: LoginRequest = {
+    email: this.email,
+    password: this.password
+  };
+
+  this.authService.login(data).subscribe({
+    next: () => {
+      this.isSubmitting = true;
+      this.errMsg = null;
+      this.redirectByRole();  // ← call this instead of router.navigate directly
+    },
+    error: (err) => {
+      this.isSubmitting = false;
+      this.errMsg = '*Invalid email or password';
+      console.error(err);
+    }
+  });
+}
+
+private redirectByRole(): void {
+  const role = this.authService.getUserRole();
+  const roleRoutes: Record<string, string> = {
+    Citizen:             '/citizen-home',
+    Doctor:              '/home',
+    LabTechnician:       '/home',
+    PublicHealthOfficer: '/home',
+    Researcher:          '/home',
+    Admin:               '/home',
+    ComplianceOfficer:   '/compliance'
+  };
+  this.router.navigate([roleRoutes[role ?? ''] ?? '/home']);
+}
 
 }
