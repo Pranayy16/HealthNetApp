@@ -29,7 +29,7 @@ export class AuthService {
   }
 
   login(credentials: LoginRequest): Observable<LoginResponse> {
-  return this.http.post<LoginResponse>(`${this.apiUrl}/v1/User`, credentials).pipe(
+  return this.http.post<LoginResponse>(`${this.apiUrl}/User`, credentials).pipe(
     tap(response => {
       this.tokenService.setToken(response.token);
       const userId: number = this.tokenService.getUserId();

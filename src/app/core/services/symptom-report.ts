@@ -14,7 +14,7 @@ import {
 })
 export class SymptomReportService {
 
-  private readonly apiUrl = `${environment.apiUrl}/v1/CitizenSymptomReporting`;
+  private readonly apiUrl = `${environment.apiUrl}/CitizenSymptomReporting`;
 
   constructor(private http: HttpClient) { }
 

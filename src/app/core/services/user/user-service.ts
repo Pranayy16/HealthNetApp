@@ -11,7 +11,7 @@ import { UpdateUser } from '../../models/UpdateUser';
 })
 export class UserService {
   private http: HttpClient = inject(HttpClient);
-  private readonly apiBaseUrl = `${environment.apiUrl}/v1/User`;
+  private readonly apiBaseUrl = `${environment.apiUrl}/User`;
 
   register(userData: User): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(`${this.apiBaseUrl}/register`, userData);
