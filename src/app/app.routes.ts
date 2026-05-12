@@ -12,6 +12,7 @@ import { DeleteUserComponent } from './components/delete-user-component/delete-u
 import { Unauthorized } from './components/unauthorized/unauthorized';
 import { LabTestComponent } from './components/lab-test-component/lab-test-component';
 import { LabTestDetailComponent } from './components/lab-test-detail-component/lab-test-detail-component';
+import { LabTestCreateComponent } from './components/lab-test-create-component/lab-test-create-component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -22,6 +23,7 @@ export const routes: Routes = [
     { path: 'about', component: AboutComponent},
     { path: "outbreaks", component: OutbreakComponent },
     { path: 'lab-tests', component: LabTestComponent, canActivate: [roleGuard], data: { roles: ['Doctor','Lab Technician']} },
+    { path: 'lab-tests/create', component: LabTestCreateComponent, canActivate: [roleGuard], data: { roles: ['Doctor','Lab Technician']}},
     { path: 'lab-tests/:id', component: LabTestDetailComponent, canActivate: [roleGuard], data: { roles: ['Doctor','Lab Technician']} },
     { path: "profile", component: ProfileComponent},
     { path: "update", component: UpdateUserComponent, canActivate: [roleGuard], data: { roles: ['Admin']} },
