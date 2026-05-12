@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom d-none d-lg-flex">
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom d-none d-lg-flex fixed-top">
   <div class="container-fluid">
 
     <!-- Logo -->
@@ -18,7 +18,7 @@
         <a class="nav-link" routerLink="/outbreaks">Outbreaks</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/labs">Labs</a>
+        <a class="nav-link" routerLink="/lab-tests">Labs</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/about">About</a>
@@ -26,19 +26,40 @@
     </ul>
 
     <!-- Auth Buttons -->
-    <div class="d-flex gap-2">
-      <a routerLink="/login" class="btn btn-outline-color btn-sm">
+    <div class="d-flex gap-2" *ngIf="!isLoggedIn">
+      <a routerLink="/login" class="btn btn-outline-primary btn-sm">
         Login
       </a>
-      <a routerLink="/register" class="btn btn-color btn-sm">
+      <a routerLink="/register" class="btn btn-primary btn-sm">
         Sign Up
       </a>
     </div>
+    <div class="d-flex gap-2" *ngIf="isLoggedIn">
+      <div class="profile-container" (click)="toggleMenu($event)">
+        <!-- {{nameLogo}} -->
+         <!-- <mat-icon class="account-icon">
+          account_circle
+         </mat-icon> -->
+         <i class="bi bi-person-circle" style="font-size: 30px;"></i>
+         <i class="bi bi-caret-down"></i>
+        <!-- Dropdown -->
+        <div class="dropdown-menu-custom" *ngIf="menuOpen">
+          <button (click)="goToProfile()">
+            <i class="bi bi-person-badge"></i>
+            Profile
+          </button>
+          <button (click)="logout()" class="custom-btn">
+            <i class="bi bi-box-arrow-left"></i>
+            Logout
+          </button>
+        </div>
 
+      </div>
+    </div>
   </div>
 </nav>
 
-<nav class="navbar navbar-light bg-light border-bottom d-lg-none">
+<nav class="navbar navbar-light bg-light border-bottom d-lg-none fixed-top">
   <div class="container-fluid">
 
     <button
@@ -105,13 +126,25 @@
       </li>
 
       <hr>
-
-      <a routerLink="/login" class="btn btn-outline-color w-100 mb-2" data-bs-dismiss="offcanvas">
+      
+      <a *ngIf="!isLoggedIn" routerLink="/login" class="btn btn-outline-primary w-100 mb-2" data-bs-dismiss="offcanvas">
+        <i class="bi bi-box-arrow-in-right"></i>
         Login
       </a>
 
-      <a routerLink="/register" class="btn btn-color w-100" data-bs-dismiss="offcanvas">
+      <a *ngIf="!isLoggedIn" routerLink="/register" class="btn btn-primary w-100" data-bs-dismiss="offcanvas">
+        <i class="bi bi-person-plus-fill"></i>
         Sign Up
+      </a>
+
+      <a *ngIf="isLoggedIn" routerLink="/profile" class="btn btn-success w-100" data-bs-dismiss="offcanvas">
+        <i class="bi bi-person-badge"></i>
+        Profile
+      </a>
+
+      <a *ngIf="isLoggedIn" routerLink="/home" class="btn btn-danger w-100" data-bs-dismiss="offcanvas">
+        <i class="bi bi-box-arrow-left"></i>
+        Logout
       </a>
 
     </ul>

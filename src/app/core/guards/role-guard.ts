@@ -13,7 +13,10 @@ export const roleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
   if (authService.hasAnyRole(requiredRoles)) {
     return true;
   }
-
+  
+  console.log('User role from token:', authService.getUserRole());
+  console.log('Required roles:', requiredRoles)
+  
   router.navigate(['/unauthorized']);
   return false;
 };

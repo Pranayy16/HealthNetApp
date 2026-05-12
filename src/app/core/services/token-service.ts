@@ -11,6 +11,7 @@ export class TokenService {
   }
 
   setToken(token: string): void {
+    console.log("Set token called in token service")
     sessionStorage.setItem(this.TOKEN_KEY, token);
   }
 
@@ -39,19 +40,25 @@ export class TokenService {
     return decoded.exp * 1000 < Date.now();
   }
 
-  getUserRole(): string | null {
+  getUserRole(): string {
+    console.log("get user role called in token service")
     const decoded = this.decodeToken();
-    if (!decoded) return null;
-    // .NET JwtSecurityTokenHandler emits role under the full schema URI by default.
-    const dotnetRoleClaim = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
-    const claim = decoded[dotnetRoleClaim] ?? decoded.role ?? decoded.roles;
-    if (Array.isArray(claim)) return claim[0] ?? null;
-    return claim ?? null;
+    console.log("Decoded token {getUserRole} : ",decoded);
+    return decoded['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] || decoded?.role || decoded?.roles?.[0];
   }
 
-  getUserId(): string | null {
+  getUserId(): number {
+    console.log("get user id called in token service")
     const decoded = this.decodeToken();
-    const nameIdClaim = 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier';
-    return decoded?.[nameIdClaim] ?? decoded?.sub ?? decoded?.userId ?? null;
+    return decoded?.sub || decoded?.userId;
   }
+
+  getUserEmail(): string{
+    const decoded = this.decodeToken();
+    console.log("decoded data : ",decoded);
+    console.log("Email : ",decoded?.Email);
+    return decoded?.Email || decoded?.email;
+  }
+
+  
 }
