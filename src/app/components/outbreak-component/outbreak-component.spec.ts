@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { OutbreakFormComponent } from './outbreak-component';
 
-import { OutbreakComponent } from './outbreak-component';
-
-describe('OutbreakComponent', () => {
-  let component: OutbreakComponent;
-  let fixture: ComponentFixture<OutbreakComponent>;
+describe('OutbreakFormComponent', () => {
+  let component: OutbreakFormComponent;
+  let fixture: ComponentFixture<OutbreakFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OutbreakComponent]
+      imports: [OutbreakFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(OutbreakComponent);
+    fixture = TestBed.createComponent(OutbreakFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
