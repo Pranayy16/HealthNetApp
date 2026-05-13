@@ -1,1 +1,182 @@
-<p>compliance-component works!</p>
+<!-- compliance-records.component.html
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+    <div class="d-flex align-items-center gap-3">
+      <div class="brand-logo">
+        <i class="ti ti-file-report" aria-hidden="true"></i>
+      </div>
+      <div>
+        <h1 class="page-title mb-0">Compliance Records</h1>
+        <p class="page-subtitle mb-0">Search and filter compliance check results</p>
+      </div>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+      <span class="live-dot"></span>
+      <span class="page-badge">
+        <i class="ti ti-shield-check me-1" aria-hidden="true"></i>
+        Compliance Officer
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE BODY -->
+<div class="page-body">
+
+  <!-- FILTER CARD -->
+  <div class="card mb-3">
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <i class="ti ti-adjustments-horizontal section-icon" aria-hidden="true"></i>
+      <span class="section-title">FILTER RECORDS</span>
+    </div>
+
+    <form #filterForm="ngForm" (ngSubmit)="onSearch()">
+      <div class="row g-3">
+
+        <!-- Type Dropdown -->
+        <div class="col-md-3 col-sm-6">
+          <label for="type" class="form-label">
+            <i class="ti ti-tag me-1" aria-hidden="true"></i>TYPE
+          </label>
+          <select
+            id="type"
+            name="type"
+            class="form-select"
+            [(ngModel)]="filters.type">
+            <option value="">All types</option>
+            <option value="case">Case</option>
+            <option value="test">Lab Test</option>
+            <option value="outbreak">Outbreak</option>
+          </select>
+        </div>
+
+        <!-- Result Dropdown -->
+        <div class="col-md-3 col-sm-6">
+          <label for="result" class="form-label">
+            <i class="ti ti-circle-check me-1" aria-hidden="true"></i>RESULT
+          </label>
+          <select
+            id="result"
+            name="result"
+            class="form-select"
+            [(ngModel)]="filters.result">
+            <option value="">All results</option>
+            <option value="compliant">Compliant</option>
+            <option value="non compliant">Non Compliant</option>
+            <option value="partially compliant">Partially Compliant</option>
+            <option value="pending review">Pending Review</option>
+          </select>
+        </div>
+
+        <!-- Date Picker -->
+        <div class="col-md-3 col-sm-6">
+          <label for="date" class="form-label">
+            <i class="ti ti-calendar me-1" aria-hidden="true"></i>DATE
+          </label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            class="form-control"
+            [(ngModel)]="filters.date" />
+        </div>
+
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="d-flex align-items-center gap-2 mt-3 flex-wrap">
+        <button type="submit" class="btn btn-primary">
+          <!-- <span *ngIf="isLoading" class="spinner me-2" aria-hidden="true"></span> -->
+          <!-- <i *ngIf="!isLoading" class="ti ti-search me-1" aria-hidden="true"></i> -->
+          <!-- {{ isLoading ? 'Searching...' : 'Search' }} -->
+            Search
+        </button>
+        <button type="button" class="btn btn-outline" (click)="onClearFilters()">
+          <i class="ti ti-x me-1" aria-hidden="true"></i>Clear Filters
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ERROR MESSAGE -->
+  <div *ngIf="errorMessage" class="alert-error d-flex align-items-center gap-2 mb-3">
+    <i class="ti ti-alert-circle" aria-hidden="true"></i>
+    {{ errorMessage }}
+  </div>
+
+  <!-- RESULTS SUMMARY -->
+  <div *ngIf="records.length > 0" class="d-flex align-items-center justify-content-between mb-2 px-1">
+    <span class="results-count">
+      <i class="ti ti-list me-1" aria-hidden="true"></i>
+      {{ records.length }} record{{ records.length !== 1 ? 's' : '' }} found
+    </span>
+    <span class="muted-text">Showing active records only</span>
+  </div>
+
+  <!-- RESULTS TABLE CARD -->
+  <div class="card" *ngIf="records.length > 0">
+    <div class="table-responsive">
+      <table class="table compliance-table mb-0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Entity ID</th>
+            <th>Type</th>
+            <th>Result</th>
+            <th>Date</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let record of records; let i = index"
+              [style.animation-delay]="i * 0.05 + 's'">
+            <td class="id-cell">#{{ record.complianceId }}</td>
+            <td class="entity-cell">{{ record.entityId }}</td>
+            <td>
+              <!-- <span class="type-badge" [ngClass]="getTypeBadgeClass(record.type)">
+                <i class="ti" [ngClass]="getTypeIcon(record.type)" aria-hidden="true"></i>
+                {{ record.type | titlecase }}
+              </span> -->
+              {{record.type | titlecase  }}
+            </td>
+            <td>
+              <!-- <span class="result-badge" [ngClass]="getResultBadgeClass(record.result)">
+                {{ record.result | titlecase }}
+              </span> -->
+               {{ record.result | titlecase }}
+            </td>
+            <td class="date-cell">
+              <i class="ti ti-calendar me-1" aria-hidden="true"></i>
+              {{ record.date | date: 'dd MMM yyyy' }}
+            </td>
+            <td class="notes-cell">
+              <span class="notes-text" [title]="record.notes">{{ record.notes }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div> 
+
+  <!-- EMPTY STATE -->
+  <!-- <div *ngIf="!isLoading && hasSearched && records.length === 0 && !errorMessage"
+       class="card empty-state text-center py-5">
+    <i class="ti ti-file-off empty-icon" aria-hidden="true"></i>
+    <p class="empty-title mt-3 mb-1">No records found</p>
+    <p class="muted-text">Try adjusting your filters or clearing them to see all records.</p>
+    <button class="btn btn-outline mt-2" (click)="onClearFilters()">
+      <i class="ti ti-refresh me-1" aria-hidden="true"></i>Reset Filters
+    </button>
+  </div> -->
+
+  <!-- INITIAL STATE -->
+  <!-- <div *ngIf="!hasSearched && !isLoading"
+       class="card empty-state text-center py-5">
+    <i class="ti ti-file-report empty-icon" aria-hidden="true"></i>
+    <p class="empty-title mt-3 mb-1">Ready to search</p>
+    <p class="muted-text">Use the filters above to search compliance records.</p>
+  </div> -->
+
+</div> -->

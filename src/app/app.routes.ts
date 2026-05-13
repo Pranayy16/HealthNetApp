@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home-component/home-component';
-import { ComplianceComponent } from './components/compliance-component/compliance-component';
+// import { ComplianceComponent } from './components/compliance-component/compliance-component';
 import { AboutComponent } from './components/about-component/about-component';
 import { LoginComponent } from './components/login-component/login-component';
 import { RegisterComponent } from './components/register-component/register-component';
@@ -10,10 +10,10 @@ import { OutbreakDashboardComponent } from './components/outbreak-component/outb
 import { OutbreakUpdateComponent } from './components/outbreak-component/outbreak-update/outbreak-update';
 import { OutbreakDetailComponent } from './components/outbreak-component/outbreak-detail/outbreak-detail';
 import { authGuard } from './core/guards/auth-guard';
-import { roleGuard } from './core/guards/role-guard';
+// import { roleGuard } from './core/guards/role-guard';
 
 const OUTBREAK_ROLES = ['Admin', 'Doctor', 'Public Health Officer'];
-import { OutbreakComponent } from './components/outbreak-component/outbreak-component';
+// import { OutbreakComponent } from './components/outbreak-component/outbreak-component';
 import { ProfileComponent } from './components/profile-component/profile-component';
 import { UpdateUserComponent } from './components/update-user-component/update-user-component';
 import { roleGuard } from './core/guards/role-guard';
@@ -28,13 +28,14 @@ import { LabTestComponent } from './components/lab-test-component/lab-test-compo
 import { LabTestDetailComponent } from './components/lab-test-detail-component/lab-test-detail-component';
 import { LabTestCreateComponent } from './components/lab-test-create-component/lab-test-create-component';
 import { LabTestEditComponent } from './components/lab-test-edit-component/lab-test-edit-component';
+import { CreateComplianceComponent } from './components/create-compliance-component/create-compliance-component';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'home', component: HomeComponent },
-    { path: 'compliance', component: ComplianceComponent },
+    { path: 'compliance', component: CreateComplianceComponent, canActivate: [roleGuard], data: { roles: ['Admin', 'Compliance Officer']}  },
     { path: 'about', component: AboutComponent },
     { path: 'unauthorized', redirectTo: 'home', pathMatch: 'full' },
 
@@ -69,9 +70,9 @@ export const routes: Routes = [
         canActivate: [authGuard, roleGuard],
         data: { roles: OUTBREAK_ROLES }
     },
-    { path: 'compliance', component: ComplianceComponent},
+    // { path: 'get-all-compliances', component: ComplianceComponent, canActivate: [roleGuard], data: { roles: ['Admin', 'Compliance Officer']} },
     { path: 'about', component: AboutComponent},
-    { path: "outbreaks", component: OutbreakComponent },
+    // { path: "outbreaks", component: OutbreakComponent },
     { path: 'lab-tests', component: LabTestComponent, canActivate: [roleGuard], data: { roles: ['Doctor','Lab Technician']} },
     { path: 'lab-tests/create', component: LabTestCreateComponent, canActivate: [roleGuard], data: { roles: ['Doctor','Lab Technician']}},
     { path: 'lab-tests/:id', component: LabTestDetailComponent, canActivate: [roleGuard], data: { roles: ['Doctor','Lab Technician']} },
@@ -83,4 +84,5 @@ export const routes: Routes = [
     { path: "update", component: UpdateUserComponent, canActivate: [roleGuard], data: { roles: ['Admin']} },
     { path: "delete", component: DeleteUserComponent, canActivate: [roleGuard], data: { roles: ['Admin']} },
     { path: "unauthorized", component: Unauthorized },
+    { path: 'create-compliance', component: CreateComplianceComponent }
 ];

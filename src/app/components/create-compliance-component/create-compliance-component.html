@@ -1,0 +1,184 @@
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="d-flex align-items-center gap-3">
+    <div class="brand-logo">
+      <i class="ti ti-file-report" aria-hidden="true"></i>
+    </div>
+    <div>
+      <h1 class="page-title mb-0">Create Compliance Record</h1>
+      <p class="page-subtitle mb-0">Log a compliance check result for a case, lab test or outbreak</p>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE BODY -->
+<div class="page-body">
+
+  <!-- SUCCESS CARD -->
+  <div *ngIf="successMessage" class="alert-success d-flex align-items-center gap-2 mb-3">
+    <i class="ti ti-circle-check" aria-hidden="true"></i>
+    <div>
+      <strong>{{ successMessage }}</strong>
+      <span class="ms-2 compliance-id-badge" *ngIf="createdComplianceId">
+        Compliance ID: #{{ createdComplianceId }}
+      </span>
+    </div>
+  </div>
+
+  <!-- ERROR MESSAGE -->
+  <div *ngIf="errorMessage" class="alert-error d-flex align-items-center gap-2 mb-3">
+    <i class="ti ti-alert-circle" aria-hidden="true"></i>
+    {{ errorMessage }}
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="card">
+
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <i class="ti ti-shield-check section-icon" aria-hidden="true"></i>
+      <span class="section-title">COMPLIANCE DETAILS</span>
+    </div>
+
+    <form #complianceForm="ngForm" (ngSubmit)="onSubmit()">
+
+      <div class="row g-3">
+
+        <!-- Entity ID -->
+        <div class="col-md-6">
+          <label for="entityId" class="form-label">
+            <i class="ti ti-hash me-1" aria-hidden="true"></i>ENTITY ID
+          </label>
+          <input
+            type="number"
+            id="entityId"
+            name="entityId"
+            class="form-control"
+            placeholder="Enter the ID of the case, test or outbreak"
+            [(ngModel)]="entityId"
+            min="1"
+            required />
+          <small class="hint-text">
+            Must be a valid ID from the Case, Lab Test or Outbreak table
+          </small>
+        </div>
+
+        <!-- Type Dropdown -->
+        <div class="col-md-6">
+          <label for="type" class="form-label">
+            <i class="ti ti-tag me-1" aria-hidden="true"></i>TYPE
+          </label>
+          <select
+            id="type"
+            name="type"
+            class="form-select"
+            [(ngModel)]="type"
+            required>
+            <option value="" disabled>Select type</option>
+            <option *ngFor="let opt of typeOptions" [value]="opt.value">
+              {{ opt.label }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Result Dropdown -->
+        <div class="col-md-6">
+          <label for="result" class="form-label">
+            <i class="ti ti-circle-check me-1" aria-hidden="true"></i>RESULT
+          </label>
+          <select
+            id="result"
+            name="result"
+            class="form-select"
+            [(ngModel)]="result"
+            required>
+            <option value="" disabled>Select result</option>
+            <option *ngFor="let opt of resultOptions" [value]="opt.value">
+              {{ opt.label }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Result Badge Preview -->
+        <div class="col-md-6 d-flex align-items-end pb-1" *ngIf="result">
+          <div class="result-preview">
+            <span class="preview-label">SELECTED RESULT</span>
+            <span class="result-badge" [ngClass]="getResultBadgeClass(result)">
+              {{ result | titlecase }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="col-12">
+          <label for="notes" class="form-label">
+            <i class="ti ti-notes me-1" aria-hidden="true"></i>NOTES
+          </label>
+          <textarea
+            id="notes"
+            name="notes"
+            class="form-control"
+            rows="4"
+            placeholder="Enter compliance check notes and findings..."
+            [(ngModel)]="notes"
+            required>
+          </textarea>
+        </div>
+
+      </div>
+
+      <!-- Info Row -->
+      <div class="info-row mt-3">
+        <i class="ti ti-calendar-event me-1" aria-hidden="true"></i>
+        Date will be automatically set to the current date and time by the system.
+      </div>
+
+      <!-- Buttons -->
+      <div class="d-flex align-items-center gap-2 mt-3 flex-wrap">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner me-2" aria-hidden="true"></span>
+          <i *ngIf="!isLoading" class="ti ti-send me-1" aria-hidden="true"></i>
+          {{ isLoading ? 'Submitting...' : 'Submit Compliance Record' }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline"
+          (click)="onReset()"
+          [disabled]="isLoading">
+          <i class="ti ti-x me-1" aria-hidden="true"></i>
+          Clear
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- RULES CARD -->
+  <div class="card rules-card">
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <i class="ti ti-info-circle section-icon" aria-hidden="true"></i>
+      <span class="section-title">SUBMISSION RULES</span>
+    </div>
+    <ul class="rules-list">
+      <li>
+        <i class="ti ti-check rule-icon" aria-hidden="true"></i>
+        Entity ID must exist in the respective Case, Lab Test or Outbreak table.
+      </li>
+      <li>
+        <i class="ti ti-check rule-icon" aria-hidden="true"></i>
+        Only one compliance record is allowed per entity — duplicates will be rejected.
+      </li>
+      <li>
+        <i class="ti ti-check rule-icon" aria-hidden="true"></i>
+        Date is automatically set to the current date — you cannot provide a past or future date.
+      </li>
+      <li>
+        <i class="ti ti-check rule-icon" aria-hidden="true"></i>
+        Once a record is marked as <strong>Compliant</strong> it cannot be updated.
+      </li>
+    </ul>
+  </div>
+
+</div>
